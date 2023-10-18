@@ -11,54 +11,54 @@ import jakarta.persistence.Id;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public int Id;
-    public String Name;
-    public String Email;
-    public String PasswordHash;
-    public String Role;
-    public Date DoB;
-    public String ProfilePhoto;
-    
+    public int id;
+    public String name;
+    public String email;
+    public String passwordHash;
+    public String role;
+    public Date dob;
+    public String profilePhoto;
+
     public int getId() {
-        return Id;
+        return id;
     }
     public void setId(int id) {
-        Id = id;
+        this.id = id;
     }
     public String getName() {
-        return Name;
+        return name;
     }
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
     public String getEmail() {
-        return Email;
+        return email;
     }
     public void setEmail(String email) {
-        Email = email;
+        this.email = email;
     }
     public String getPasswordHash() {
-        return PasswordHash;
+        return passwordHash;
     }
     public void setPasswordHash(String passwordHash) {
-        PasswordHash = passwordHash;
+        this.passwordHash = passwordHash;
     }
     public String getRole() {
-        return Role;
+        return role;
     }
     public void setRole(String role) {
-        Role = role;
+        this.role = role;
     }
-    public Date getDoB() {
-        return DoB;
+    public Date getDob() {
+        return dob;
     }
-    public void setDoB(Date doB) {
-        DoB = doB;
+    public void setDob(Date dob) {
+        this.dob = dob;
     }
     public String getProfilePhoto() {
-        return ProfilePhoto;
+        return profilePhoto;
     }
     public void setProfilePhoto(String profilePhoto) {
-        ProfilePhoto = profilePhoto;
+        this.profilePhoto = profilePhoto;
     }
 }
