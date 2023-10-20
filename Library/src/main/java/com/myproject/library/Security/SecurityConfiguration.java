@@ -35,7 +35,7 @@ public class SecurityConfiguration {
 	{
 		http.csrf().disable()
 		.authorizeHttpRequests().requestMatchers("/","/register","/signin","/saveUser").permitAll()
-		.requestMatchers("/user/**").authenticated().and()
+		.requestMatchers("/user/**", "/book/**").authenticated().and()
 		.formLogin().loginPage("/signin").loginProcessingUrl("/userLogin")
 		//.usernameParameter("email")
 		.defaultSuccessUrl("/user/profile").permitAll();

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Details</title>
+</head>
+<body>
+    <h1>Book Details</h1>
+    <div th:object="${book}">
+        <p th:text="*{title}"></p>
+        <p th:text="*{isbn}"></p>
+        <p th:text="*{revisionNumber}"></p>
+        <p th:text="*{publicationDate}"></p>
+        <p th:text="*{publisher}"></p>
+        <p th:text="*{authors}"></p>
+        <p th:text="*{dateAdded}"></p>
+        <p th:text="*{genre}"></p>
+        <p th:text="*{availability} ? 'Available' : 'Not Available'"></p>
+    </div>
+</body>
+</html>

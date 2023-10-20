@@ -1,6 +1,7 @@
 package com.myproject.library.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -27,27 +28,14 @@ public class UserService implements IUserService {
         return user;
     }
 
-    // public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    //     // CreateAdmin();
-    //     var tempUser = repository.findByEmail(username);
-    //     if (tempUser == null)
-    //         throw new UsernameNotFoundException(username);
-    //     return tempUser;
-    // }
-    // private boolean checkIfEmailUsed(String email){
-    //     return repository.findByEmail(email) !=null ? true : false;
-    // }
-    // public User checkUserAndPassword(String username, String password){
-    //     var user = repository.findByEmail(username);
-    //     var encoder = new BCryptPasswordEncoder();  
-    //     System.out.println(encoder.matches(password, user.getPassword())); 
-    //     if(encoder.matches(password, user.getPassword())){
-    //         return user;    
-    //     }
-    //      System.out.println(user.getPassword());
-    //         System.out.println(encoder.encode(password));
-    //     return null;
-    // }
+    public User loadUserByEmail(String username) throws UsernameNotFoundException {
+        // CreateAdmin();
+        var tempUser = repository.findByEmail(username);
+        if (tempUser == null)
+            throw new UsernameNotFoundException(username);
+        return tempUser;
+    }
+
 
 	public void removeSessionMessage() {
 

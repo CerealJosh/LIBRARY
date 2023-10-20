@@ -11,75 +11,75 @@ import jakarta.persistence.Id;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public int Id;
-    public String Title;
-    public String ISBN;
-    public int RevisionNumber;
-    public Date PublicationDate;
-    public String Publisher;
-    public String Authors;
-    public Date DateAdded;
-    public String Genre;
-    public boolean Availability;
+    public int id;
+    public String title;
+    public String isbn;
+    public int revisionNumber;
+    public Date publicationDate;
+    public String publisher;
+    public String authors;
+    public Date dateAdded;
+    public String genre;
+    public boolean availability;
     
     public int getId() {
-        return Id;
+        return id;
     }
     public void setId(int id) {
-        Id = id;
+        this.id = id;
     }
     public String getTitle() {
-        return Title;
+        return title;
     }
     public void setTitle(String title) {
-        Title = title;
+        this.title = title;
     }
-    public String getISBN() {
-        return ISBN;
+    public String getIsbn() {
+        return isbn;
     }
-    public void setISBN(String iSBN) {
-        ISBN = iSBN;
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
     public int getRevisionNumber() {
-        return RevisionNumber;
+        return revisionNumber;
     }
     public void setRevisionNumber(int revisionNumber) {
-        RevisionNumber = revisionNumber;
+        this.revisionNumber = revisionNumber;
     }
     public Date getPublicationDate() {
-        return PublicationDate;
+        return publicationDate;
     }
     public void setPublicationDate(Date publicationDate) {
-        PublicationDate = publicationDate;
+        this.publicationDate = publicationDate;
     }
     public String getPublisher() {
-        return Publisher;
+        return publisher;
     }
     public void setPublisher(String publisher) {
-        Publisher = publisher;
+        this.publisher = publisher;
     }
     public String getAuthors() {
-        return Authors;
+        return authors;
     }
     public void setAuthors(String authors) {
-        Authors = authors;
+        this.authors = authors;
     }
     public Date getDateAdded() {
-        return DateAdded;
+        return dateAdded;
     }
     public void setDateAdded(Date dateAdded) {
-        DateAdded = dateAdded;
+        this.dateAdded = dateAdded;
     }
     public String getGenre() {
-        return Genre;
+        return genre;
     }
     public void setGenre(String genre) {
-        Genre = genre;
+        this.genre = genre;
     }
     public boolean isAvailability() {
-        return Availability;
+        return availability;
     }
     public void setAvailability(boolean availability) {
-        Availability = availability;
+        this.availability = availability;
     }
 }
