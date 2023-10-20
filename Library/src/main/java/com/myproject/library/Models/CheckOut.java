@@ -11,49 +11,33 @@ import jakarta.persistence.Id;
 public class CheckOut {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public int Id;
-    public int UserId;
-    public int BookId;
-    public Date BorrowDate;
-    public Date ReturnDate;
-
+    public int id;
+    public int userId;
+    public int bookId;
+    public Date borrowDate;
+    
     public int getId() {
-        return Id;
+        return id;
     }
-
     public void setId(int id) {
-        Id = id;
+        this.id = id;
     }
-
     public int getUserId() {
-        return UserId;
+        return userId;
     }
-
     public void setUserId(int userId) {
-        UserId = userId;
+        this.userId = userId;
     }
-
     public int getBookId() {
-        return BookId;
+        return bookId;
     }
-
     public void setBookId(int bookId) {
-        BookId = bookId;
+        this.bookId = bookId;
     }
-
     public Date getBorrowDate() {
-        return BorrowDate;
+        return borrowDate;
     }
-
     public void setBorrowDate(Date borrowDate) {
-        BorrowDate = borrowDate;
-    }
-
-    public Date getReturnDate() {
-        return ReturnDate;
-    }
-
-    public void setReturnDate(Date returnDate) {
-        ReturnDate = returnDate;
+        this.borrowDate = borrowDate;
     }
 }
