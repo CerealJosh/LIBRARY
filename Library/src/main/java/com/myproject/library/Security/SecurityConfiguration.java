@@ -3,6 +3,7 @@ package com.myproject.library.Security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,6 +12,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfiguration {
 
 	@Bean
@@ -30,16 +32,15 @@ public class SecurityConfiguration {
 		daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
 		return daoAuthenticationProvider;
 	}
-    @Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception
-	{
-		http.csrf().disable()
-		.authorizeHttpRequests().requestMatchers("/","/register","/signin","/saveUser").permitAll()
-		.requestMatchers("/user/**", "/book/**").authenticated().and()
-		.formLogin().loginPage("/signin").loginProcessingUrl("/userLogin")
-		//.usernameParameter("email")
-		.defaultSuccessUrl("/user/profile").permitAll();
-		return http.build();
-    }
 
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		http.csrf(csrf -> csrf.disable())
+				.authorizeHttpRequests().requestMatchers("/", "/register", "/signin", "/saveUser").permitAll()
+				.requestMatchers("/user/**", "/book/**", "/checkout/**").authenticated().and()
+				.formLogin(login -> login.loginPage("/signin").loginProcessingUrl("/userLogin")
+						// .usernameParameter("email")
+						.defaultSuccessUrl("/user/profile").permitAll());
+		return http.build();
+	}
 }

@@ -59,8 +59,6 @@ public class UserController {
 	@PostMapping("/saveUser")
 	public String saveUser(@ModelAttribute User user, HttpSession session, Model m) {
 
-		// System.out.println(user);
-
 		User u = userService.saveUser(user);
 
 		if (u != null) {
@@ -74,4 +72,8 @@ public class UserController {
 		return "home";
 	}
 
+	@GetMapping("NotAuthorized")
+	public String NotAuthorized(){
+		return "NotAuthorized";
+	}
 }

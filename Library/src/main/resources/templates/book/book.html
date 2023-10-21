@@ -18,6 +18,8 @@
         <p th:text="*{dateAdded}"></p>
         <p th:text="*{genre}"></p>
         <p th:text="*{availability} ? 'Available' : 'Not Available'"></p>
+
+        <p><a th:href="@{/checkout/{id}(id=${book.id})}">Check Out</a></p>
     </div>
 </body>
 </html>

@@ -1,6 +1,6 @@
 package com.myproject.library.Models;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,8 +14,14 @@ public class CheckOut {
     public int id;
     public int userId;
     public int bookId;
-    public Date borrowDate;
+    public LocalDate borrowDate;
     
+    public CheckOut(){}
+    public CheckOut(int bookId, int userId){
+        this.bookId = bookId;
+        this.userId = userId;
+    }
+
     public int getId() {
         return id;
     }
@@ -34,10 +40,10 @@ public class CheckOut {
     public void setBookId(int bookId) {
         this.bookId = bookId;
     }
-    public Date getBorrowDate() {
+    public LocalDate getBorrowDate() {
         return borrowDate;
     }
-    public void setBorrowDate(Date borrowDate) {
+    public void setBorrowDate(LocalDate borrowDate) {
         this.borrowDate = borrowDate;
     }
 }

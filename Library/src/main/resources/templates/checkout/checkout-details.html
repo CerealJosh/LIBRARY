@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout Details</title>
+    <!-- Add your CSS styles or link to external stylesheets here -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Checkout Details</h1>
+    <!-- Display checkout details, for example: -->
+    Checkout ID:<p th:text="${checkout.id}"> </p>
+    User ID: <p th:text="${checkout.userId}"></p>
+    Book ID: <p th:text="${checkout.bookId}"></p>
+    Borrow Date: <p th:text="${checkout.borrowDate}"></p>
+    <br>
+    <br>
+    <a th:href="@{'/checkout/delete/' + ${checkout.id} + '_' + ${checkout.bookId}}">Return</a>
+</body>
+</html>

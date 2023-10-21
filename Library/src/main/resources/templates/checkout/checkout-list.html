@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkouts List</title>
+    <!-- Add your CSS styles or link to external stylesheets here -->
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 50px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+      th,
+      td {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Checkouts List</h1>
+    <table>
+      <thead>
+        <tr>
+          <!-- <th>ID</th> -->
+          <th>User ID</th>
+          <th>Book ID</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="checkout : ${checkouts}">
+          <!-- <td th:text="${checkout.id}"></td> -->
+          <td th:text="${checkout.userId}"></td>
+          <td th:text="${checkout.bookId}"></td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

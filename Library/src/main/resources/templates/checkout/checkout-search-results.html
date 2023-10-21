@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout Search Results</title>
+    <!-- Add your CSS styles or link to external stylesheets here -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h1>Checkout Search Results</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>User ID</th>
+                <th>Book ID</th>
+                <!-- Add more table headers as needed -->
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Iterate over the list of checkouts and populate the table rows -->
+            <!-- Example using Thymeleaf syntax: -->
+            <!-- <tr th:each="checkout : ${checkouts}"> -->
+            <!--     <td th:text="${checkout.id}"></td> -->
+            <!--     <td th:text="${checkout.userId}"></td> -->
+            <!--     <td th:text="${checkout.bookId}"></td> -->
+            <!-- </tr> -->
+        </tbody>
+    </table>
+    <!-- Add additional content or links as needed -->
+</body>
+</html>

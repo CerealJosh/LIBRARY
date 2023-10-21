@@ -53,7 +53,12 @@ public class BookService implements IBookService {
         }
         tempBook = book;
         saveBook(tempBook);
-        bookRepository.save(book);
+    }
+    
+    public void returnBook(int bookId) throws Exception {
+        Book tempBook = findBook(bookId);
+        tempBook.setAvailability(true);
+        saveBook(tempBook);
     }
 
     public void deleteBook(int id) {

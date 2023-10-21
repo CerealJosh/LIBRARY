@@ -4,6 +4,8 @@ import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,11 +24,12 @@ public class BookController {
     private BookService bookService;
 
     @GetMapping("/book/{id}")
-    public String getBook(@PathVariable int id, Model model) throws Exception{
-        //var bookId = Integer.parseInt(id);
+    public String getBook(@PathVariable int id, Model model) throws Exception {
+        // var bookId = Integer.parseInt(id);
         model.addAttribute("book", bookService.findBook(id));
         return "book/book";
     }
+
     @GetMapping("/book/books")
     public String getBooks(Model model) {
         List<Book> books = bookService.getAllBooks();
@@ -55,26 +58,46 @@ public class BookController {
 
     @GetMapping("/book/addBook")
     public String addBook(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String r = auth.getAuthorities().toString();
+        if (!r.equals("[Librarian]")) {
+            return "NotAuthorized";
+        }
         model.addAttribute("book", new Book());
         return "/book/addBook";
     }
 
     @PostMapping("/book/addBook")
     public String addBook(@ModelAttribute("book") Book book, Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String r = auth.getAuthorities().toString();
+        if(!r.equals("[Librarian]")){
+            return "NotAuthorized";
+        }
         Book newBook = book;
         bookService.saveBook(newBook);
         return "redirect:/book/books";
     }
 
     @PutMapping("book/update/{id}")
-    String updateBook(@PathVariable String id, @ModelAttribute("Book") Book book) throws Exception{
+    String updateBook(@PathVariable String id, @ModelAttribute("Book") Book book) throws Exception {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String r = auth.getAuthorities().toString();
+        if (!r.equals("[Librarian]")) {
+            return "NotAuthorized";
+        }
         var bookId = Integer.parseInt(id);
         bookService.updateBook(bookId, book);
-        return "book/" +id;
+        return "book/" + id;
     }
 
     @DeleteMapping("/books/delete/{id}")
     String deleteBook(@PathVariable String id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String r = auth.getAuthorities().toString();
+        if (!r.equals("[Librarian]")) {
+            return "NotAuthorized";
+        }
         int bookId = Integer.parseInt(id);
         bookService.deleteBook(bookId);
         return "redirect:/book/books";
