@@ -44,4 +44,13 @@ public class UserService implements IUserService {
         session.removeAttribute("msg");
     }
 
+    @Override
+    public User findbyUserId(int id) {
+        var user = repository.findById(id);
+        if(user.isPresent()){
+            return user.get();
+        }
+        return null;
+    }
+
 }

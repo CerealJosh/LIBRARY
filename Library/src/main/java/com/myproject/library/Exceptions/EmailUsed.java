@@ -1,4 +1,4 @@
-package com.myproject.library.Exception;
+package com.myproject.library.Exceptions;
 
 public class EmailUsed extends Exception{
     public EmailUsed() {
