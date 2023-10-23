@@ -20,7 +20,7 @@ public class UserService implements IUserService {
     public User saveUser(User user) {
         var encoder = new BCryptPasswordEncoder();
         var hashedPassword = encoder.encode(user.getPassword());
-        if(user.getRole() != "Librarian"){
+        if (user.getRole() != "Librarian"){
             user.setRole("Reader");
         }
         user.setPassword(hashedPassword);
@@ -36,12 +36,12 @@ public class UserService implements IUserService {
         return tempUser;
     }
 
+    public void removeSessionMessage() {
 
-	public void removeSessionMessage() {
+        HttpSession session = ((ServletRequestAttributes) (RequestContextHolder.getRequestAttributes())).getRequest()
+                .getSession();
 
-		HttpSession session = ((ServletRequestAttributes) (RequestContextHolder.getRequestAttributes())).getRequest()
-				.getSession();
+        session.removeAttribute("msg");
+    }
 
-		session.removeAttribute("msg");
-	}
 }
