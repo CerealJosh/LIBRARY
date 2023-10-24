@@ -1,17 +1,75 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Add Book</title>
-</head>
-<body>
-    <h1>Add New Book</h1>
-    <form th:action="@{/book/addBook}" method="post" th:object="${book}">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" media="screen" />
+    <link th:href="@{/css/core.css}" rel="stylesheet" media="screen" />
+  </head>
+  <body>
+    <header th:insert="~{fragments/header.html :: header}">&nbsp;</header>
+    <div class="container">
+      <h1>Add New Book</h1>
+      <form
+        th:action="@{/book/addBook}"
+        method="post"
+        th:object="${book}"
+        enctype="multipart/form-data"
+        class="form-group"
+      >
         <label for="title">Title:</label>
-        <input type="text" id="title" name="title" th:field="*{title}" /><br/>
-        <!-- Include other input fields for the book properties -->
-        <button type="submit">Add Book</button>
-    </form>
-</body>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          th:field="*{title}"
+          class="form-control"
+        /><br />
+        <label for="isbn">ISBN:</label>
+        <input
+          type="text"
+          id="isbn"
+          name="isbn"
+          th:field="*{isbn}"
+          class="form-control"
+        /><br />
+        <label for="revisionNumber">revisionNumber:</label>
+        <input
+          type="text"
+          id="revisionNumber"
+          name="revisionNumber"
+          th:field="*{revisionNumber}"
+          class="form-control"
+        /><br />
+        <label for="publicationDate">publicationDate:</label>
+        <input
+          type="date"
+          id="publicationDate"
+          name="publicationDate"
+          th:field="*{publicationDate}"
+          class="form-control"
+        /><br />
+        <label for="publisher">publisher:</label>
+        <input
+          type="text"
+          id="publisher"
+          name="publisher"
+          th:field="*{publisher}"
+          class="form-control"
+        /><br />
+        <label for="authors">authors:</label>
+        <input
+          type="text"
+          id="authors"
+          name="authors"
+          th:field="*{authors}"
+          class="form-control"
+        /><br />
+        <label for="coverphoto">Upload a cover photo</label>
+        <input type="file" name="file" class="form-control" /><br class="form-group"/>
+        <p><button type="submit" class="btn btn-primary">Add Book</button></p>
+      </form>
+    </div>
+  </body>
 </html>

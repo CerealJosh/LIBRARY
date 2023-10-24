@@ -1,11 +1,24 @@
 package com.myproject.library.Services;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.OpenOption;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.StandardOpenOption;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.myproject.library.Models.User;
 import com.myproject.library.Repository.UserRepository;
@@ -20,7 +33,7 @@ public class UserService implements IUserService {
     public User saveUser(User user) {
         var encoder = new BCryptPasswordEncoder();
         var hashedPassword = encoder.encode(user.getPassword());
-        if (user.getRole() != "Librarian"){
+        if (user.getRole() != "Librarian") {
             user.setRole("Reader");
         }
         user.setPassword(hashedPassword);
@@ -47,10 +60,31 @@ public class UserService implements IUserService {
     @Override
     public User findbyUserId(int id) {
         var user = repository.findById(id);
-        if(user.isPresent()){
+        if (user.isPresent()) {
             return user.get();
         }
         return null;
     }
 
+    @Value("${upload.path}")
+    private String uploadPath;
+
+    public void saveProfilePicture(User user, MultipartFile file) throws IOException {
+        String fileName = user.getId() + ".png";// + file.getOriginalFilename();
+        Path uploadPath = Paths.get("src/main/resources/static/uploads/users/");
+
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
+        }
+
+        try (InputStream inputStream = file.getInputStream()) {
+            Files.copy(inputStream, uploadPath.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
+        }
+        user.setProfilePhoto(fileName);
+        repository.save(user);
+    }
+
+    public List<User> getAllUsers(){
+        return repository.findAll();
+    }
 }

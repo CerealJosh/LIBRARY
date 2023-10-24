@@ -1,9 +1,14 @@
 package com.myproject.library.Controllers;
 
+import java.io.IOException;
+import java.security.Principal;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -14,14 +19,31 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.support.MultipartFilter;
 
 import com.myproject.library.Models.Book;
+import com.myproject.library.Models.User;
 import com.myproject.library.Services.BookService;
+import com.myproject.library.Services.UserService;
 
 @Controller
 public class BookController {
     @Autowired
     private BookService bookService;
+
+    @Autowired
+    private UserService userService;
+
+    @ModelAttribute
+    public void commonUser(Principal p, Model m) {
+        if (p != null) {
+            String email = p.getName();
+            User user = userService.loadUserByEmail(email);
+            m.addAttribute("user", user);
+        }
+    }
 
     @GetMapping("/book/{id}")
     public String getBook(@PathVariable int id, Model model) throws Exception {
@@ -34,7 +56,12 @@ public class BookController {
     public String getBooks(Model model) {
         List<Book> books = bookService.getAllBooks();
         model.addAttribute("books", books);
-        return "/book/books";
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String r = auth.getAuthorities().toString();
+        if (!r.equals("[Librarian]")) {
+            return "/book/books";
+        }
+        return "book/books-admin";
     }
 
     @GetMapping("/book/search")
@@ -68,16 +95,29 @@ public class BookController {
     }
 
     @PostMapping("/book/addBook")
-    public String addBook(@ModelAttribute("book") Book book, Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    public String addBook(@ModelAttribute("book") Book book, Model model,@RequestParam("file") MultipartFile file) throws IOException {
+        try {
+                    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String r = auth.getAuthorities().toString();
-        if(!r.equals("[Librarian]")){
+        if (!r.equals("[Librarian]")) {
             return "NotAuthorized";
         }
         Book newBook = book;
-        bookService.saveBook(newBook);
-        return "redirect:/book/books";
+        book.setDateAdded(LocalDate.now());
+        if(file.getBytes() != null){
+            newBook.getId();
+            bookService.saveCoverPhoto(newBook, file);
+        }
+        else{
+            bookService.saveBook(newBook);
+        }
+        model.addAttribute("book", book);
+        return "book/book-success";            
+        } catch (Exception e) {
+           return "book/book-error";
+        }
     }
+
 
     @PutMapping("book/update/{id}")
     String updateBook(@PathVariable String id, @ModelAttribute("Book") Book book) throws Exception {
@@ -91,7 +131,7 @@ public class BookController {
         return "book/" + id;
     }
 
-    @DeleteMapping("/books/delete/{id}")
+    @GetMapping("/book/delete/{id}")
     String deleteBook(@PathVariable String id) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String r = auth.getAuthorities().toString();
@@ -102,4 +142,5 @@ public class BookController {
         bookService.deleteBook(bookId);
         return "redirect:/book/books";
     }
+
 }

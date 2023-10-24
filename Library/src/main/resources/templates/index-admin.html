@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head th:fragment="headerfiles">
+    <meta charset="ISO-8859-1" />
+    <title>Insert title here</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" media="screen" />
+    <link th:href="@{/css/core.css}" rel="stylesheet" media="screen" />
+  </head>
+  <body>
+    <header th:insert="~{fragments/header.html :: header}">&nbsp;</header>
+    <div class="container">
+      <section>
+        <h1 class="introtext">Welcome Admin</h1>
+        <div class="cardholder">
+          <div class="mycards1">
+            <div class="container">
+              <h3 class="cb">Add Books</h3>
+              <a th:href="@{../book/addBook}" class="button">Here</a>
+            </div>
+          </div>
+          <div class="mycards2">
+            <div class="container">
+              <h3 class="cb">View List of Checked Out Books</h3>
+              <a th:href="@{../checkout/checkouts}" class="button">Here</a>
+            </div>
+          </div>
+          <div class="mycards1">
+            <div class="container">
+              <h3 class="cb">View List of Users</h3>
+              <a th:href="@{../user/allUsers}" class="button">Here</a>
+            </div>
+          </div>
+          <div class="mycards2">
+            <div class="container">
+              <h3 class="cb">Manage Books</h3>
+              <a th:href="@{../book/books}" class="button">Here</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

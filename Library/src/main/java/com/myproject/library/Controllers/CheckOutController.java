@@ -4,13 +4,10 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,15 +31,14 @@ public class CheckOutController {
         this.service = service;
     }
 
-    // @ModelAttribute
-    // public void commonUser(Principal p, Model m) {
-    // if (p != null) {
-    // String email = p.getName();
-    // User user = userService.loadUserByEmail(email);
-    // m.addAttribute("user", user);
-    // System.out.println(user.getId());
-    // }
-    // }
+    @ModelAttribute
+    public void commonUser(Principal p, Model m) {
+        if (p != null) {
+            String email = p.getName();
+            User user = userService.loadUserByEmail(email);
+            m.addAttribute("user", user);
+        }
+    }
 
     @GetMapping("/checkout/{id}")
     public String createCheckOut(@PathVariable int id, Principal p, Model model) {
@@ -59,7 +55,7 @@ public class CheckOutController {
     public String getCheckouts(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String r = auth.getAuthorities().toString();
-        if(!r.equals("[Librarian]")){
+        if (!r.equals("[Librarian]")) {
             return "NotAuthorized";
         }
         List<CheckOut> checkOuts = service.retrieveCheckoutsList();
@@ -85,13 +81,13 @@ public class CheckOutController {
             model.addAttribute("checkouts", checkOuts);
             return "checkout/checkout-search-results";
         } catch (Exception e) {
-            
+
         }
-            return "error";
+        return "error";
     }
 
     @GetMapping("/checkout/delete/{id}_{bookid}")
-    public String deleteCheckOuts(@PathVariable String id,@PathVariable String bookid, HttpServletRequest request) {
+    public String deleteCheckOuts(@PathVariable String id, @PathVariable String bookid, HttpServletRequest request) {
         int intId = Integer.parseInt(id);
         int intBookId = Integer.parseInt(bookid);
         System.out.println(bookid);

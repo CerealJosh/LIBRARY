@@ -1,25 +1,39 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Books</title>
-</head>
-<body>
-    <h1>Books</h1>
-    <table border="1">
-        <tr>
-            <th>Title</th>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" media="screen" />
+    <link th:href="@{/css/core.css}" rel="stylesheet" media="screen" />
+  </head>
+  <body>
+    <header th:insert="~{fragments/header.html :: header}">&nbsp;</header>
+    <div class="container">
+      <h1>Books</h1>
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Title</th>
             <th>ISBN</th>
             <th>Publisher</th>
             <th>Date Added</th>
-        </tr>
-        <tr th:each="book : ${books}">
-            <td><a th:href="@{/book/{id}(id=${book.id})}" th:text="${book.title}"></a></td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="book : ${books}">
+            <td>
+              <a
+                th:href="@{/book/{id}(id=${book.id})}"
+                th:text="${book.title}"
+              ></a>
+            </td>
             <td th:text="${book.isbn}"></td>
             <td th:text="${book.publisher}"></td>
             <td th:text="${book.dateAdded}"></td>
-        </tr>
-    </table>
-</body>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
 </html>

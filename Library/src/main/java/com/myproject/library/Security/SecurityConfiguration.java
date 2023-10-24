@@ -36,11 +36,11 @@ public class SecurityConfiguration {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.csrf(csrf -> csrf.disable())
-				.authorizeHttpRequests().requestMatchers("/", "/register", "/signin", "/saveUser").permitAll()
-				.requestMatchers("/user/**", "/book/**", "/checkout/**").authenticated().and()
+				.authorizeHttpRequests().requestMatchers("/", "/register", "/signin", "/saveUser","/uploads/**", "/css/**", "/img/**","/fragments/**","/fonts/**").permitAll()
+				.requestMatchers("/user/**", "/book/**", "/checkout/**","/upload").authenticated().and()
 				.formLogin(login -> login.loginPage("/signin").loginProcessingUrl("/userLogin")
 						// .usernameParameter("email")
-						.defaultSuccessUrl("/user/profile").permitAll());
+						.defaultSuccessUrl("/").permitAll());
 		return http.build();
 	}
 }

@@ -1,5 +1,11 @@
 package com.myproject.library.Services;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
@@ -7,8 +13,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.myproject.library.Models.Book;
+import com.myproject.library.Models.User;
 import com.myproject.library.Repository.BookRepository;
 
 @Service
@@ -63,5 +71,19 @@ public class BookService implements IBookService {
 
     public void deleteBook(int id) {
         bookRepository.deleteById(id);
+    }
+
+    public void saveCoverPhoto(Book book, MultipartFile file) throws IOException {
+        String fileName = book.getId() + "-" + file.getOriginalFilename();
+        Path uploadPath = Paths.get("src/main/resources/static/uploads/books/"+book.getIsbn());
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
+        }
+
+        try (InputStream inputStream = file.getInputStream()) {
+            Files.copy(inputStream, uploadPath.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
+        }
+        book.setCoverPhoto(fileName);
+        bookRepository.save(book);
     }
 }

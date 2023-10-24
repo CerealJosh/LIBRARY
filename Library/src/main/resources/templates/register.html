@@ -1,58 +1,62 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-	th:replace="base::layout(~{::section})">
-<head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
-	<section>
-		<div class="container p-3">
-			<div class="row">
-				<div class="col-md-6 offset-md-3">
-					<div class="card">
-						<div class="card-header text-center fs-4">Register Page</div>
+<html lang="en">
+  <head>
+    <meta charset="ISO-8859-1" />
+    <title>Insert title here</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" media="screen" />
+    <link th:href="@{/css/core.css}" rel="stylesheet" media="screen" />
+  </head>
+  <body>
+    <header th:insert="~{fragments/header.html :: header}">&nbsp;</header>
+    <div class="container">
+      <section>
+        <div class="container p-3">
+          <div class="row">
+            <div class="col-md-6 offset-md-3">
+              <div class="card">
+                <div class="card-header text-center fs-4">Register Page</div>
 
+                <th:block th:if="${session.msg}">
+                  <p class="text-center text-success fs-4">
+                    [[${session.msg}]]
+                  </p>
+                  <th:block
+                    th:text="${@userServiceImpl.removeSessionMessage()}"
+                  ></th:block>
+                </th:block>
 
-						<th:block th:if="${session.msg}">
-							<p class="text-center text-success fs-4">[[${session.msg}]]</p>
-							<th:block th:text="${@userServiceImpl.removeSessionMessage()}"></th:block>
+                <div class="card-body">
+                  <form action="saveUser" method="post">
+                    <div class="mb-3">
+                      <label>Enter Full Name</label>
+                      <input type="text" name="name" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                      <label>Enter Email</label>
+                      <input type="text" name="email" class="form-control" />
+                    </div>
 
-						</th:block>
+                    <div class="mb-3">
+                      <label>Enter Date of Birth</label>
+                      <input type="date" name="dob" class="form-control" />
+                    </div>
 
-						<div class="card-body">
-							<form action="saveUser" method="post">
-								<div class="mb-3">
-									<label>Enter Full Name</label> <input type="text" name="name"
-										class="form-control">
-								</div>
-								<div class="mb-3">
-									<label>Enter Email</label> <input type="text" name="email"
-										class="form-control">
-								</div>
-
-								<div class="mb-3">
-									<label>Enter Date of Birth</label> <input type="date"
-										name="dob" class="form-control">
-								</div>
-
-								<div class="mb-3">
-									<label>Enter Password</label> <input type="password"
-										name="password" class="form-control">
-								</div>
-								<button class="btn btn-primary col-md-12">Register</button>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-
-		</div>
-
-
-
-
-
-	</section>
-</body>
+                    <div class="mb-3">
+                      <label>Enter Password</label>
+                      <input
+                        type="password"
+                        name="password"
+                        class="form-control"
+                      />
+                    </div>
+                    <button class="btn btn-primary col-md-12">Register</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
 </html>

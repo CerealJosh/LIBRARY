@@ -22,6 +22,15 @@ public class Book {
     public LocalDate dateAdded;
     public String genre;
     public boolean availability = true;
+    public String coverPhoto;
+
+    public String getCoverPhoto() {
+        return coverPhoto;
+    }
+
+    public void setCoverPhoto(String coverPhoto) {
+        this.coverPhoto = coverPhoto;
+    }
 
     public int getId() {
         return id;

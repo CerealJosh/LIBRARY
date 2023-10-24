@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head th:fragment="headerfiles">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Book Details</title>
-</head>
-<body>
-    <h1>Book Details</h1>
-    <div th:object="${book}">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" media="screen" />
+    <link th:href="@{/css/core.css}" rel="stylesheet" media="screen"/>
+  </head>
+  <body>
+    <header th:insert="~{fragments/header.html :: header}">&nbsp;</header>
+    <div class="container">
+      <h1 class="introtext">Book Details</h1>
+      <div th:object="${book}">
         <p th:text="*{title}"></p>
         <p th:text="*{isbn}"></p>
         <p th:text="*{revisionNumber}"></p>
@@ -18,8 +21,8 @@
         <p th:text="*{dateAdded}"></p>
         <p th:text="*{genre}"></p>
         <p th:text="*{availability} ? 'Available' : 'Not Available'"></p>
-
-        <p><a th:href="@{/checkout/{id}(id=${book.id})}">Check Out</a></p>
+        <p><a th:href="@{/checkout/{id}(id=${book.id})}" th:text="*{availability} ? 'Check Out' : ''"></a></p>
+      </div>
     </div>
-</body>
+  </body>
 </html>

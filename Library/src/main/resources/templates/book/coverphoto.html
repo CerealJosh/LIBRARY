@@ -1,27 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Checkout Success</title>
+    <title>Add Book</title>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" media="screen" />
     <link th:href="@{/css/core.css}" rel="stylesheet" media="screen" />
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        text-align: center;
-        padding: 50px;
-      }
-      h1 {
-        color: green;
-      }
-    </style>
   </head>
   <body>
     <header th:insert="~{fragments/header.html :: header}">&nbsp;</header>
     <div class="container">
-      <h1>Checkout Successful!</h1>
-      <p>Thank you for checking out the book. Enjoy your reading!</p>
+      <h1>Select Cover Photo</h1>
+      <section>
+        <form action="/book/coverphoto" method="post" enctype="multipart/form-data">
+          <input type="file" name="file" />
+          <button type="submit">Upload</button>
+        </form>
+      </section>
     </div>
   </body>
 </html>
