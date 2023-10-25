@@ -11,10 +11,10 @@
     <header th:insert="~{fragments/header.html :: header}">&nbsp;</header>
     <div class="container">
       <h1>Checkouts List</h1>
-      <table>
+      <table class="table">
         <thead>
           <tr>
-            <!-- <th>ID</th> -->
+            <th>ID</th>
             <th>User ID</th>
             <th>Book ID</th>
             <th>Borrow Date</th>
@@ -22,7 +22,7 @@
         </thead>
         <tbody>
           <tr th:each="checkout : ${checkouts}">
-            <!-- <td th:text="${checkout.id}"></td> -->
+            <td><a th:href="@{/checkout/checkout/{id}(id=${checkout.id})}" th:text="${checkout.id}"></a></td>
             <td th:text="${checkout.userId}"></td>
             <td th:text="${checkout.bookId}"></td>
             <td th:text="${checkout.borrowDate}"

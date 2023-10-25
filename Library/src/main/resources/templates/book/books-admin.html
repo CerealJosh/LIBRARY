@@ -10,8 +10,35 @@
   <body>
     <header th:insert="~{fragments/header.html :: header}">&nbsp;</header>
     <div class="container">
-      <h1>Books</h1>
-      <table border="1" class="table">
+      <h1 style="margin-left: 50%">Books</h1>
+      <div class="resultarea">
+        <div
+          th:each="book : ${books}"
+          class="searchcontainer container"
+          style="height: 480px"
+        >
+          <img
+            th:src="@{'/uploads/books/'+${book.isbn} +'/' +${book.coverPhoto}}"
+            alt="Cover Picture"
+            class="searchimg"
+            onerror="this.src ='/uploads/defaults/Cover.jpg';"
+          />
+          <h1>
+            <a
+              th:href="@{/book/{id}(id=${book.id})}"
+              th:text="${book.title}"
+            ></a>
+          </h1>
+          <p th:text="${book.isbn}"></p>
+          <p th:text="${book.publisher}"></p>
+          <p th:text="${book.dateAdded}"></p>
+          <a th:href="@{/book/delete/{id}(id=${book.id})}" class="button"
+            >Delete</a
+          >
+          <!-- <a th:href="@{/book/update/{id}(id=${book.id})}">Modify</a> -->
+        </div>
+      </div>
+      <!-- <table border="1" class="table">
         <tr>
           <th>Title</th>
           <th>ISBN</th>
@@ -35,7 +62,7 @@
             <a th:href="@{/book/update/{id}(id=${book.id})}">Modify</a>
           </td>
         </tr>
-      </table>
+      </table> -->
     </div>
   </body>
 </html>

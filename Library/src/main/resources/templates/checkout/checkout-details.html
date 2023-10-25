@@ -18,20 +18,31 @@
     <header th:insert="~{fragments/header.html :: header}">&nbsp;</header>
     <div class="container">
       <h1>Checkout Details</h1>
-      <!-- Display checkout details, for example: -->
-      Checkout ID:
-      <p th:text="${checkout.id}"></p>
-      User ID:
-      <p th:text="${checkout.userId}"></p>
-      Book ID:
-      <p th:text="${checkout.bookId}"></p>
-      Borrow Date:
-      <p th:text="${checkout.borrowDate}"></p>
+      <br/>
+      <br/>
+      <table class="table">
+        <tr>
+          <th>Checkout ID:</th>
+          <td th:text="*{checkout.id}"></td>
+        </tr>
+        <tr>
+          <th>User ID:</th>
+          <td th:text="*{checkout.userId}"></td>
+        </tr>
+        <tr>
+          <th>Book ID:</th>
+          <td th:text="*{checkout.bookId}"></td>
+        </tr>
+        <tr>
+          <th>Borrow Date:</th>
+          <td th:text="*{checkout.borrowDate}"></td>
+        </tr>
+      </table>
       <br />
       <br />
       <a
-        th:href="@{'/checkout/delete/' + ${checkout.id} + '_' + ${checkout.bookId}}"
-        >Return</a
+        th:href="@{'/checkout/delete/' + ${checkout.id} + '_' + ${checkout.bookId}}" class="button"
+        >Return Book</a
       >
     </div>
   </body>

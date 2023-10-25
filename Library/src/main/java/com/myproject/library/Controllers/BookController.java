@@ -7,13 +7,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,8 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.support.MultipartFilter;
-
 import com.myproject.library.Models.Book;
 import com.myproject.library.Models.User;
 import com.myproject.library.Services.BookService;
@@ -76,9 +71,13 @@ public class BookController {
 
     @PostMapping("/book/search")
     public String searchBooks(@ModelAttribute("title") String title, @ModelAttribute("isbn") String isbn,
-            @ModelAttribute("publisher") String publisher, @ModelAttribute("dateAdded") Date dateAdded, Model model) {
-
-        List<Book> searchResults = bookService.searchBooks(title, isbn, publisher, dateAdded);
+            @ModelAttribute("publisher") String publisher, @ModelAttribute("dateAdded") String dateAdded, Model model) {
+        if (dateAdded.isBlank()) {
+            List<Book> searchResults = bookService.searchBooks(title, isbn, publisher, null);
+            model.addAttribute("books", searchResults);
+            return "/book/search-results";
+        }
+        List<Book> searchResults = bookService.searchBooks(title, isbn, publisher, Date.valueOf(dateAdded));
         model.addAttribute("books", searchResults);
         return "/book/search-results";
     }
@@ -95,29 +94,28 @@ public class BookController {
     }
 
     @PostMapping("/book/addBook")
-    public String addBook(@ModelAttribute("book") Book book, Model model,@RequestParam("file") MultipartFile file) throws IOException {
+    public String addBook(@ModelAttribute("book") Book book, Model model, @RequestParam("file") MultipartFile file)
+            throws IOException {
         try {
-                    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String r = auth.getAuthorities().toString();
-        if (!r.equals("[Librarian]")) {
-            return "NotAuthorized";
-        }
-        Book newBook = book;
-        book.setDateAdded(LocalDate.now());
-        if(file.getBytes() != null){
-            newBook.getId();
-            bookService.saveCoverPhoto(newBook, file);
-        }
-        else{
-            bookService.saveBook(newBook);
-        }
-        model.addAttribute("book", book);
-        return "book/book-success";            
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String r = auth.getAuthorities().toString();
+            if (!r.equals("[Librarian]")) {
+                return "NotAuthorized";
+            }
+            Book newBook = book;
+            book.setDateAdded(LocalDate.now());
+            if (file.getBytes() != null) {
+                newBook.getId();
+                bookService.saveCoverPhoto(newBook, file);
+            } else {
+                bookService.saveBook(newBook);
+            }
+            model.addAttribute("book", book);
+            return "book/book-success";
         } catch (Exception e) {
-           return "book/book-error";
+            return "book/book-error";
         }
     }
-
 
     @PutMapping("book/update/{id}")
     String updateBook(@PathVariable String id, @ModelAttribute("Book") Book book) throws Exception {

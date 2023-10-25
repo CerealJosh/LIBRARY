@@ -5,23 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Book Details</title>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" media="screen" />
-    <link th:href="@{/css/core.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/core.css}" rel="stylesheet" media="screen" />
   </head>
   <body>
     <header th:insert="~{fragments/header.html :: header}">&nbsp;</header>
     <div class="container">
       <h1 class="introtext">Book Details</h1>
       <div th:object="${book}">
-        <p th:text="*{title}"></p>
-        <p th:text="*{isbn}"></p>
-        <p th:text="*{revisionNumber}"></p>
-        <p th:text="*{publicationDate}"></p>
-        <p th:text="*{publisher}"></p>
-        <p th:text="*{authors}"></p>
-        <p th:text="*{dateAdded}"></p>
-        <p th:text="*{genre}"></p>
-        <p th:text="*{availability} ? 'Available' : 'Not Available'"></p>
-        <p><a th:href="@{/checkout/{id}(id=${book.id})}" th:text="*{availability} ? 'Check Out' : ''"></a></p>
+        <table class="table">
+          <tr>
+            <th>Title</th>
+            <td th:text="*{title}"></td>
+          </tr>
+          <tr>
+            <th>ISBN</th>
+            <td th:text="*{isbn}"></td>
+          </tr>
+          <tr>
+            <th>Revision Number</th>
+            <td th:text="*{revisionNumber}"></td>
+          </tr>
+          <tr>
+            <th>Publication Date</th>
+            <td th:text="*{publicationDate}"></td>
+          </tr>
+          <tr>
+            <th>Publisher</th>
+            <td th:text="*{publisher}"></td>
+          </tr>
+          <tr>
+            <th>Author(s)</th>
+            <td th:text="*{authors}"></td>
+          </tr>
+          <tr>
+            <th>Date Added</th>
+            <td th:text="*{dateAdded}"></td>
+          </tr>
+          <tr>
+            <th>Genres</th>
+            <td th:text="*{genre}"></td>
+          </tr>
+        </table>
+        <h2 th:text="*{availability} ? 'Available' : 'Not Available'"></h2>
+        <p>
+          <a
+            th:href="@{/checkout/{id}(id=${book.id})}"
+            th:text="*{availability} ? 'Check Out' : ''" class="button"
+          ></a>
+        </p>
       </div>
     </div>
   </body>
