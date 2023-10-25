@@ -24,26 +24,26 @@ public class Scheduler {
 
     List<CheckOut> checkOuts = new ArrayList<CheckOut>();
 
-    // @Scheduled(fixedRateString = "PT25H")
-    // public void retrieve() {
-    //     checkOuts = service.retrieveCheckoutsList();
-    //     for (CheckOut checkOut : checkOuts) {
-    //         int daysGone = LocalDate.from(LocalDate.now()).compareTo(checkOut.borrowDate);
-    //         if (daysGone == 8) {
-    //             reminder(checkOut);
-    //         } else if (daysGone == 10) {
-    //             overdue(checkOut);
-    //         }
-    //     }
-    // }
+    @Scheduled(fixedRateString = "PT25H")
+    public void retrieve() {
+        checkOuts = service.retrieveCheckoutsList();
+        for (CheckOut checkOut : checkOuts) {
+            int daysGone = LocalDate.from(LocalDate.now()).compareTo(checkOut.borrowDate);
+            if (daysGone == 8) {
+                reminder(checkOut);
+            } else if (daysGone == 10) {
+                overdue(checkOut);
+            }
+        }
+    }
 
-    // public void reminder(CheckOut checkOut) {
-    //     var user = userService.findbyUserId(checkOut.getUserId());
-    //     emailservice.sendReminderMail(user.getEmail());
-    // }
+    public void reminder(CheckOut checkOut) {
+        var user = userService.findbyUserId(checkOut.getUserId());
+        emailservice.sendReminderMail(user.getEmail());
+    }
 
-    // public void overdue(CheckOut checkOut) {
-    //     var defaultingUser = userService.findbyUserId(checkOut.getUserId());
-    //     emailservice.sendOverdueMail(checkOut, defaultingUser.getEmail());
-    // }
+    public void overdue(CheckOut checkOut) {
+        var defaultingUser = userService.findbyUserId(checkOut.getUserId());
+        emailservice.sendOverdueMail(checkOut, defaultingUser.getEmail());
+    }
 }
