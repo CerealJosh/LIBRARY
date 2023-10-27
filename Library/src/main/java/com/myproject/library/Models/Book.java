@@ -24,6 +24,16 @@ public class Book {
     public boolean availability = true;
     public String coverPhoto;
 
+    public Book() {
+    }
+
+    public Book(String title, String isbn, String publisher, LocalDate dateAdded) {
+        this.title = title;
+        this.isbn = isbn;
+        this.publisher = publisher;
+        this.dateAdded = dateAdded;
+    }
+
     public String getCoverPhoto() {
         return coverPhoto;
     }

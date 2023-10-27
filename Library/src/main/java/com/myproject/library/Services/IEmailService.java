@@ -4,5 +4,5 @@ import com.myproject.library.Models.CheckOut;
 
 public interface IEmailService {
     void sendReminderMail(String receiver);
-    void sendOverdueMail(CheckOut checkOut, String username);
+    void sendOverdueMail(CheckOut checkOut);
 }

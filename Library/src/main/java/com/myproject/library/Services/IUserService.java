@@ -10,11 +10,13 @@ import com.myproject.library.Models.User;
 
 public interface IUserService {
 
-	public User saveUser(User user);
+	User saveUser(User user);
 
-	public void removeSessionMessage();
+	void removeSessionMessage();
 
-	public User findbyUserId(int id);
+	User findbyUserId(int id);
+
+	List<User> getUserByRole(String role);
 
 	List<User> getAllUsers();
 

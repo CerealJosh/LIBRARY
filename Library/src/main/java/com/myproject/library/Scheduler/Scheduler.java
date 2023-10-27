@@ -24,7 +24,7 @@ public class Scheduler {
 
     List<CheckOut> checkOuts = new ArrayList<CheckOut>();
 
-    @Scheduled(fixedRateString = "PT25H")
+    @Scheduled(fixedRateString = "PT24H")
     public void retrieve() {
         checkOuts = service.retrieveCheckoutsList();
         for (CheckOut checkOut : checkOuts) {
@@ -43,7 +43,6 @@ public class Scheduler {
     }
 
     public void overdue(CheckOut checkOut) {
-        var defaultingUser = userService.findbyUserId(checkOut.getUserId());
-        emailservice.sendOverdueMail(checkOut, defaultingUser.getEmail());
+        emailservice.sendOverdueMail(checkOut);
     }
 }

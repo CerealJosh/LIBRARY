@@ -15,8 +15,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.myproject.library.Exceptions.BookNotFoundException;
 import com.myproject.library.Models.Book;
-import com.myproject.library.Models.User;
 import com.myproject.library.Repository.BookRepository;
 
 @Service
@@ -29,10 +29,10 @@ public class BookService implements IBookService {
         this.bookRepository = bookRepository;
     }
 
-    public Book findBook(int id) throws Exception {
+    public Book findBook(int id) throws BookNotFoundException {
         Optional<Book> searchedBook = bookRepository.findById(id);
         if (!searchedBook.isPresent()) {
-            throw new Exception("Book Not Found!!");
+            throw new BookNotFoundException("Book Not Found!!");
         }
         return searchedBook.get();
     }
